@@ -1,0 +1,13 @@
+@import "_normalize";
+
+:root {
+	--c-white: #fff;
+	--c-yellow: #ffaf00;
+
+	--c-primary: var(--c-yellow);
+}
+
+body {
+	color: var(--c-white);
+	background: var(--c-primary);
+}

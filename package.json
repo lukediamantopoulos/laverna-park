@@ -1,0 +1,25 @@
+{
+  "name": "template_basic",
+  "version": "0.0.1",
+  "description": "",
+  "main": "index.js",
+  "dependencies": {
+    "parcel-bundler": "^1.12.3",
+    "three": "^0.126.1"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.13.8",
+    "@babel/preset-env": "^7.13.9",
+    "parcel": "^2.0.0-beta.1",
+    "sass": "^1.32.2"
+  },
+  "scripts": {
+    "dev": "parcel index.html",
+    "build": "parcel build index.html"
+  },
+  "includePaths": [
+    "node_modules"
+  ],
+  "author": "",
+  "license": "ISC"
+}

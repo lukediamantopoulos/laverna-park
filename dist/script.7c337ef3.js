@@ -117,83 +117,99 @@ parcelRequire = (function (modules, cache, entry, globalName) {
   }
 
   return newRequire;
-})({"node_modules/parcel-bundler/src/builtins/bundle-url.js":[function(require,module,exports) {
-var bundleURL = null;
+})({"script/index.js":[function(require,module,exports) {
+function initialize() {
+  var Modal = function Modal(element) {
+    var modal = element;
+    var triggers = [];
 
-function getBundleURLCached() {
-  if (!bundleURL) {
-    bundleURL = getBundleURL();
-  }
+    var addTrigger = function addTrigger(element) {
+      var targets = element instanceof Array ? element : [element];
+      targets.forEach(function (target) {
+        triggers.push(target);
+        target.addEventListener('click', toggleModal);
+      });
+    };
 
-  return bundleURL;
-}
+    var removeTriggers = function removeTriggers() {
+      triggers.forEach(function (trigger) {
+        trigger.removeEventListener('click', toggleModal);
+      });
+    };
 
-function getBundleURL() {
-  // Attempt to find the URL of the current script and use that as the base URL
-  try {
-    throw new Error();
-  } catch (err) {
-    var matches = ('' + err.stack).match(/(https?|file|ftp|chrome-extension|moz-extension):\/\/[^)\n]+/g);
+    var toggleModal = function toggleModal() {
+      modal.classList.contains('is-active') ? closeModal() : openModal();
+    };
 
-    if (matches) {
-      return getBaseURL(matches[0]);
-    }
-  }
+    var closeModal = function closeModal() {
+      modal.classList.remove('is-active');
+      document.body.classList.remove('no-scroll');
+      form_mail.reset();
+      video_youtube.pause();
+    };
 
-  return '/';
-}
+    var openModal = function openModal() {
+      modal.classList.add('is-active');
+      document.body.classList.add('no-scroll');
+    };
 
-function getBaseURL(url) {
-  return ('' + url).replace(/^((?:https?|file|ftp|chrome-extension|moz-extension):\/\/.+)\/[^/]+$/, '$1') + '/';
-}
+    return {
+      modal: modal,
+      addTrigger: addTrigger,
+      removeTriggers: removeTriggers,
+      closeModal: closeModal
+    };
+  }; // Mail chimp
 
-exports.getBundleURL = getBundleURLCached;
-exports.getBaseURL = getBaseURL;
-},{}],"node_modules/parcel-bundler/src/builtins/css-loader.js":[function(require,module,exports) {
-var bundle = require('./bundle-url');
 
-function updateLink(link) {
-  var newLink = link.cloneNode();
+  var modal_mail_chimp = Modal(document.querySelector('#modal-mailchimp'));
+  modal_mail_chimp.addTrigger([document.querySelector('.btn-join-js'), document.querySelector('#modal-mailchimp .modal__inner__close-js')]); // video
 
-  newLink.onload = function () {
-    link.remove();
+  var modal_video = Modal(document.querySelector('#modal-video'));
+  modal_video.addTrigger([document.querySelector('.trailer_link-js'), document.querySelector('#modal-video .modal__inner__close-js')]);
+
+  var Form = function Form(element) {
+    var form = element;
+    var success_message = form.querySelector('#mce-success-response');
+
+    var onSubmit = function onSubmit(e) {
+      if (success_message.style.display === 'none') return;
+      reset();
+    };
+
+    var reset = function reset() {
+      form.reset();
+    };
+
+    form.addEventListener('submit', onSubmit);
+    return {
+      form: form,
+      reset: reset
+    };
   };
 
-  newLink.href = link.href.split('?')[0] + '?' + Date.now();
-  link.parentNode.insertBefore(newLink, link.nextSibling);
+  var form_mail = Form(document.querySelector('#mc-embedded-subscribe-form')); // Add video controls
+
+  var Controls = function Controls(element) {
+    var video = element;
+    var src = video.src;
+
+    var pause = function pause() {
+      video.src = null;
+      video.src = src;
+    };
+
+    return {
+      video: video,
+      pause: pause
+    };
+  };
+
+  var video_youtube = Controls(document.querySelector('#yt-player'));
 }
 
-var cssTimeout = null;
-
-function reloadCSS() {
-  if (cssTimeout) {
-    return;
-  }
-
-  cssTimeout = setTimeout(function () {
-    var links = document.querySelectorAll('link[rel="stylesheet"]');
-
-    for (var i = 0; i < links.length; i++) {
-      if (bundle.getBaseURL(links[i].href) === bundle.getBundleURL()) {
-        updateLink(links[i]);
-      }
-    }
-
-    cssTimeout = null;
-  }, 50);
-}
-
-module.exports = reloadCSS;
-},{"./bundle-url":"node_modules/parcel-bundler/src/builtins/bundle-url.js"}],"style/index.scss":[function(require,module,exports) {
-var reloadCSS = require('_css_loader');
-
-module.hot.dispose(reloadCSS);
-module.hot.accept(reloadCSS);
-},{"_css_loader":"node_modules/parcel-bundler/src/builtins/css-loader.js"}],"script/index.js":[function(require,module,exports) {
-"use strict";
-
-require("../style/index.scss");
-},{"../style/index.scss":"style/index.scss"}],"node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
+window.addEventListener('load', initialize);
+},{}],"node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 var OldModule = module.bundle.Module;
@@ -221,7 +237,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "57281" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "52420" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

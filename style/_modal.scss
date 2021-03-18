@@ -1,0 +1,264 @@
+.modal {
+	position: fixed;
+	top: 0;
+	left: 0;
+	height: 100vh;
+	width: 100%;
+	padding: 2.5rem;
+
+	display: flex;
+	justify-content: center;
+	align-items: center;
+
+	z-index: 9999;
+
+	background: rgba(0, 0, 0, 0.75);
+	backdrop-filter: blur(5px);
+
+	display: none;
+
+	&.is-active {
+		display: flex;
+	}
+
+	&__inner {
+		width: 100%;
+		max-width: 1280px;
+		max-height: 100vh;
+		display: flex;
+		position: relative;
+		opacity: 0;
+		transform: translateY(50px);
+		animation-delay: 0.25s;
+		height: auto;
+		padding: 50px;
+
+		@keyframes enter {
+			from {
+				opacity: 0;
+				transform: translateY(50px);
+			}
+			to {
+				opacity: 1;
+				transform: translateY(0px);
+			}
+		}
+
+		.is-active & {
+			animation: enter 0.5s ease-in-out forwards;
+		}
+
+		@media screen and (max-width: 960px) {
+			flex-direction: column;
+			padding: 50px 20px;
+		}
+
+		&__close {
+			position: absolute;
+			top: 25px;
+			right: 0;
+			height: 25px;
+			width: 25px;
+
+			background: none;
+			outline: 0;
+			border: none;
+			transform: scale(1) rotate(0deg);
+			transition: 0.2s ease-in-out transform;
+			z-index: 9999;
+
+			@media screen and (max-width: 960px) {
+				top: 10px;
+				right: 10px;
+			}
+
+			&:hover {
+				transform: scale(1.1) rotate(-90deg);
+			}
+
+			&::before,
+			&::after {
+				content: "";
+				position: absolute;
+				top: 50%;
+				left: 50%;
+				transform: translate(-50%, -50%) rotate(-45deg);
+				height: 100%;
+				width: 2px;
+				background: var(--c-light);
+			}
+
+			&::after {
+				transform: translate(-50%, -50%) rotate(45deg);
+			}
+		}
+
+		&__panel {
+			width: 50%;
+
+			@media screen and (max-width: 960px) {
+				width: 100%;
+			}
+
+			&:first-child {
+				padding-right: 2rem;
+			}
+
+			.highlight {
+				font-family: var(--f-blender-book);
+			}
+		}
+
+		&__video {
+			width: 100%;
+			position: relative;
+			max-height: 100vh;
+
+			&:after {
+				content: "";
+				position: relative;
+				display: block;
+				pointer-events: none;
+				padding-bottom: calc((315 / 560) * 100%);
+			}
+
+			iframe {
+				position: absolute;
+				left: 0;
+				top: 0;
+				height: 100%;
+				width: 100%;
+			}
+		}
+
+		&__form {
+			background: #515151;
+			padding: 2.5rem;
+			border-radius: 1rem;
+
+			&__desc {
+				margin: 0 0 2.5rem 0;
+				font-size: 2.2rem;
+				line-height: 1em;
+			}
+
+			#mc_embed_signup_scroll {
+				display: flex;
+				flex-wrap: wrap;
+
+				.mc-field-group {
+					display: flex;
+					flex-wrap: nowrap;
+					margin-bottom: 1rem;
+					position: relative;
+
+					&-first,
+					&-last,
+					&-email {
+						label {
+							white-space: nowrap;
+							flex-basis: auto;
+							display: flex;
+							align-items: center;
+							color: var(--c-dark);
+							background: white;
+							padding: 1rem;
+							font-size: 1.6rem;
+						}
+						input {
+							flex-basis: auto;
+							width: 100%;
+							border-radius: 0;
+							outline: 0;
+							border: 0;
+							padding: 1rem;
+							margin-right: 1rem;
+							font-size: 1.6rem;
+
+							&:focus,
+							&:active {
+								outline: 1px solid #0084ff;
+							}
+						}
+					}
+
+					&-last {
+						input {
+							margin-right: 0;
+						}
+					}
+
+					&-email {
+						width: 75%;
+						margin-bottom: 0;
+
+						@media screen and (max-width: 960px) {
+							width: 100%;
+							margin-right: 0px;
+							margin-bottom: 10px;
+
+							input {
+								margin-right: 0;
+							}
+						}
+					}
+
+					&-first,
+					&-last {
+						width: 50%;
+
+						@media screen and (max-width: 480px) {
+							width: 100%;
+
+							input {
+								margin-right: 0;
+							}
+						}
+					}
+				}
+
+				input[type="submit"] {
+					background: #0084ff;
+					outline: none;
+					border: 0;
+					border-radius: 10px;
+					padding: 10px 20px;
+					font-size: 1.6rem;
+					color: white;
+					display: inline-block;
+					flex: 1;
+
+					&:focus,
+					&:active {
+						outline: 1px solid var(--c-yellow);
+					}
+				}
+
+				div.mce_inline_error {
+					position: absolute;
+					bottom: 100%;
+					margin: 0;
+				}
+
+				#mce-responses {
+					margin: 1rem 0;
+					font-size: 1.4rem;
+
+					a {
+						color: var(--c-primary);
+					}
+				}
+			}
+
+			.indicates-required {
+				margin-top: 2rem;
+				font-size: 1.4rem;
+			}
+
+			.fine-print {
+				margin-top: 0;
+				font-size: 1.4rem;
+			}
+		}
+	}
+}

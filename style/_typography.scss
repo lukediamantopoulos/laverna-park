@@ -1,0 +1,126 @@
+@mixin text-shadow($spread: 2px) {
+	text-shadow: 0px 1px $spread rgba(0, 0, 0, 1);
+}
+
+@mixin list-reset {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+// Basics
+
+.quote {
+	@include text-shadow(5px);
+	color: var(--c-yellow);
+	font-family: var(--f-artico-italic);
+	text-align: center;
+	font-size: 3rem;
+
+	&-small {
+		font-size: 3.7rem;
+	}
+}
+
+.fine-print {
+	font-size: 1.4rem;
+}
+
+p {
+	font-size: 2.2rem;
+	max-width: 900px;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+h2,
+h3 {
+	font-size: 3.8rem;
+	margin: 0;
+}
+
+a {
+	cursor: pointer;
+}
+
+pre {
+	white-space: pre-wrap;
+	font-family: Arial, Helvetica, sans-serif;
+}
+
+// Addons
+
+.text-shadow {
+	text-shadow: 0 0 25px black;
+}
+
+.text-center {
+	text-align: center;
+}
+
+.inline-link {
+	color: var(--c-light);
+	text-decoration: none;
+	&:hover {
+		color: var(--c-primary);
+	}
+}
+
+.highlight {
+	color: var(--c-yellow);
+	font-family: var(--f-blender-bold);
+}
+
+.streak {
+	display: inline-block;
+	position: relative;
+	padding: 50px 50px;
+	width: 100%;
+	max-width: 1200px;
+
+	& > * {
+		position: relative;
+	}
+
+	&::before {
+		content: "";
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+		background-image: url("/assets/images/banner-streaks.png");
+		background-size: cover;
+		background-position: center;
+	}
+
+	&-hero {
+		max-width: 100%;
+
+		&::before,
+		&::after {
+			@media screen and (max-width: 1024px) {
+				background-position: center;
+				background-size: cover;
+				-webkit-filter: contrast(1.5) brightness(0.75);
+				filter: contrast(1.5) brightness(0.75);
+			}
+		}
+
+		&::before {
+			background-image: url("/assets/images/banner-hero-streak-bottom.svg");
+		}
+
+		&::after {
+			content: "";
+			position: absolute;
+			top: 0;
+			left: 0;
+			width: 100%;
+			height: 100%;
+			background-image: url("/assets/images/banner-hero-streak-top.svg");
+			background-size: 100% 100%;
+			background-position: center;
+		}
+	}
+}

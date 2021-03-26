@@ -37,6 +37,10 @@ h2,
 h3 {
 	font-size: 3.8rem;
 	margin: 0;
+
+	@media screen and (max-width: 767px) {
+		font-size: 3rem;
+	}
 }
 
 a {
